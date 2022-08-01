@@ -27,6 +27,7 @@ export const App = () => {
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
+          <Route path="*" element={<h2>Error 404</h2>} />
         </Routes>
       </Suspense>
     </div>

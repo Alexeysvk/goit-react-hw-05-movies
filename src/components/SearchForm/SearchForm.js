@@ -22,7 +22,7 @@ export default function SearchForm({ handleOnSubmit }) {
 
     handleOnSubmit(movieName);
 
-    setMovieName('');
+
   };
 
   return (

@@ -1,28 +1,23 @@
 import { getMovie } from 'services/apiService';
 import { Box, Wrap, Btn, Link } from './MovieDetailsPage.styled';
-import { useEffect, useState } from 'react';
-import {
-  useParams,
-  useNavigate,
-  Outlet,
-} from 'react-router-dom';
+import { useEffect, useState, Suspense } from 'react';
+import { useParams, useLocation, Outlet } from 'react-router-dom';
 
 export default function MovieDetalisPage() {
   const params = useParams();
   const [movie, setMovie] = useState(null);
+  const { state } = useLocation();
 
-  const navigate = useNavigate();
-  const onBack = () => {
-    navigate(-1);
-  };
+  const path = state?.from ?? '/';
+
   useEffect(() => {
     getMovie(params.id).then(movie => setMovie(movie));
   }, [params.id]);
   return (
     <>
-      <Btn type="button" onClick={onBack}>
-        Back
-      </Btn>
+      <Link to={path}>
+        <Btn type="button">Back</Btn>
+      </Link>
       <Wrap>
         {movie && (
           <>
@@ -59,7 +54,9 @@ export default function MovieDetalisPage() {
 
       <Link to="reviews">Rewiev</Link>
 
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+          <Outlet />
+      </Suspense>
     </>
   );
 }
